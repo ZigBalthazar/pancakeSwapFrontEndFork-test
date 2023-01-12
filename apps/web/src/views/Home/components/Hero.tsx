@@ -40,6 +40,7 @@ const BgWrapper = styled.div`
   height: 100%;
   bottom: 0px;
   left: 0px;
+  background-image: linear-gradient(to bottom, #FDA769, #FEC868);
 `
 
 const InnerWrapper = styled.div`

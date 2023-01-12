@@ -1,5 +1,11 @@
 import '@pancakeswap/ui/css/reset.css'
 import { ResetCSS, ScrollToTopButtonV2, ToastListener } from '@pancakeswap/uikit'
+import { ThemeProvider } from 'styled-components';
+import {
+  light as lightBase,
+  dark as darkBase,
+  PancakeTheme
+} from '@pancakeswap/uikit';
 import BigNumber from 'bignumber.js'
 import GlobalCheckClaimStatus from 'components/GlobalCheckClaimStatus'
 import { NetworkModal } from 'components/NetworkModal'
@@ -55,9 +61,33 @@ function MPGlobalHooks() {
   useLockedEndNotification()
   return null
 }
+// customize light theme
+const light: PancakeTheme = lightBase;
+light.colors.text = '#000000' as any;
+light.colors.background = "#ABC270" as any;
+light.card.background = '#FDA769';
+light.colors.backgroundAlt = '#473C33' as any
+light.card.cardHeaderBackground = {
+default: 'coral',
+violet: 'goldenrod',
+blue: 'aquamarine'
+} as any;
+
+// customize dark theme
+const dark: PancakeTheme = darkBase;
+dark.colors.text = '#444' as any;
+dark.card.background = '#111';
+dark.card.cardHeaderBackground = {
+default: 'bisque',
+violet: 'chartreuse',
+blue: 'blueviolet'
+} as any;
+
 
 function MyApp(props: AppProps<{ initialReduxState: any }>) {
   const { pageProps, Component } = props
+
+
   const store = useStore(pageProps.initialReduxState)
 
   return (
@@ -86,6 +116,7 @@ function MyApp(props: AppProps<{ initialReduxState: any }>) {
         )}
       </Head>
 
+    <ThemeProvider theme={light}>
       <Providers store={store}>
         <Blocklist>
           {(Component as NextPageWithLayout).mp ? <MPGlobalHooks /> : <GlobalHooks />}
@@ -98,6 +129,7 @@ function MyApp(props: AppProps<{ initialReduxState: any }>) {
           </PersistGate>
         </Blocklist>
       </Providers>
+      </ThemeProvider>
       <Script
         strategy="afterInteractive"
         id="google-tag"
